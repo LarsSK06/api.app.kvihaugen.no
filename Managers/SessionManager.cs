@@ -1,5 +1,6 @@
 using KvihaugenIdentityAPI.Classes;
 using KvihaugenIdentityAPI.Models;
+using KvihaugenIdentityAPI.Utilities;
 using MongoDB.Driver;
 
 namespace KvihaugenIdentityAPI.Managers;
@@ -8,8 +9,8 @@ public readonly struct SessionManager{
 
     readonly static List<Session> sessions = [];
 
-    public static string Create(User user){
-        Session session = new(user);
+    public static async Task<string> Create(User user){
+        Session session = new(await UniqueToken(), user);
 
         sessions.Add(session);
 
@@ -21,7 +22,7 @@ public readonly struct SessionManager{
             if(i.Token != token) continue;
             
             if(!ignoreSync){
-                IAsyncCursor<User>? cursor =
+                IAsyncCursor<User> cursor =
                     await DatabaseManager.Users.FindAsync(x => x.Id == i.User.Id);
                 
                 User? user = await cursor.FirstOrDefaultAsync();
@@ -44,7 +45,7 @@ public readonly struct SessionManager{
             if(i.User.Id != userId) continue;
             
             if(!ignoreSync){
-                IAsyncCursor<User>? cursor =
+                IAsyncCursor<User> cursor =
                     await DatabaseManager.Users.FindAsync(x => x.Id == i.User.Id);
                 
                 User? user = await cursor.FirstOrDefaultAsync();
@@ -60,6 +61,15 @@ public readonly struct SessionManager{
         }
 
         return null;
+    }
+
+    static async Task<string> UniqueToken(){
+        string result = Crypto.RandomString();
+
+        while(await GetAsync(result) is not null)
+            result = Crypto.RandomString();
+        
+        return result;
     }
 
 }

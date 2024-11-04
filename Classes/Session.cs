@@ -8,8 +8,8 @@ public class Session{
     public User User { get; set; }
     public DateTime Expires { get; private set; } = DateTime.Now.AddMinutes(5);
 
-    public Session(User user){
-        Token = "wwdwdwdw";
+    public Session(string token, User user){
+        Token = token;
         User = user;
     }
 
