@@ -27,7 +27,7 @@ public readonly struct SessionManager{
                 
                 User? user = await cursor.FirstOrDefaultAsync();
 
-                if(user is null){
+                if(user is null || !user.Active){
                     sessions.Remove(i);
                     return null;
                 }
@@ -50,7 +50,7 @@ public readonly struct SessionManager{
                 
                 User? user = await cursor.FirstOrDefaultAsync();
 
-                if(user is null){
+                if(user is null || !user.Active){
                     sessions.Remove(i);
                     return null;
                 }

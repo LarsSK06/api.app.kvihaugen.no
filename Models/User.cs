@@ -39,6 +39,10 @@ public class User{
     [BsonRepresentation(BsonType.Boolean)]
     public required bool Administrator { get; set; }
 
+    [BsonElement("active")]
+    [BsonRepresentation(BsonType.Boolean)]
+    public required bool Active { get; set; }
+
     public SoftMutableUser ToSoftMutable(){
         return new(){
             FirstName = FirstName,
@@ -54,7 +58,8 @@ public class User{
             LastName = LastName,
             Gender = Gender,
             Email = Email,
-            Administrator = Administrator
+            Administrator = Administrator,
+            Active = Active
         };
     }
 
@@ -65,7 +70,8 @@ public class User{
             LastName = LastName,
             Gender = Gender,
             Email = Email,
-            Administrator = Administrator
+            Administrator = Administrator,
+            Active = Active
         };
     }
 
@@ -87,6 +93,7 @@ public class HardMutableUser{
     public required Gender Gender { get; set; }
     public required string Email { get; set; }
     public required bool Administrator { get; set; }
+    public required bool Active { get; set; }
 
 }
 
@@ -98,5 +105,6 @@ public class PublicUser{
     public required Gender Gender { get; set; }
     public required string Email { get; set; }
     public required bool Administrator { get; set; }
+    public required bool Active { get; set; }
 
 }

@@ -16,12 +16,11 @@ public class AuthController : ControllerBase{
         if(DatabaseManager.Users is null)
             return NotFound();
 
-        if(DatabaseManager.UserRequests is null)
-            return NotFound();
-
         if(await DatabaseManager.Users.CountDocumentsAsync(
             i => i.Email.ToLower() == data.Email.ToLower()
         ) > 0) return Conflict("Email is already in use!");
+
+        bool owner = data.Email.ToLower() == "lars@kvihaugen.no";
 
         User user = new(){
             Id = Functions.GetEpoch(),
@@ -30,13 +29,11 @@ public class AuthController : ControllerBase{
             Gender = data.Gender,
             Email = data.Email,
             Password = Crypto.Hash(data.Password),
-            Administrator = data.Email.ToLower() == "lars@kvihaugen.no"
+            Administrator = owner,
+            Active = owner
         };
 
-        await DatabaseManager.UserRequests.InsertOneAsync(new(){
-            Id = Functions.GetEpoch(),
-            User = user
-        });
+        await DatabaseManager.Users.InsertOneAsync(user);
 
         return NoContent();
     }
@@ -48,7 +45,10 @@ public class AuthController : ControllerBase{
 
         IAsyncCursor<User> cursor =
             await DatabaseManager.Users.FindAsync(
-                i => i.Email.ToLower() == data.Email.ToLower()
+                Builders<User>.Filter.Or(
+                    Builders<User>.Filter.Where(i => i.Email.ToLower() == data.Email.ToLower()),
+                    Builders<User>.Filter.Where(i => i.Active)
+                )
             );
         
         User? user = await cursor.FirstOrDefaultAsync();

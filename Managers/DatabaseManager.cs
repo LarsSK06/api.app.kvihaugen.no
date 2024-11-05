@@ -13,9 +13,4 @@ public readonly struct DatabaseManager{
             .GetDatabase(Identity)
             .GetCollection<User>("users");
 
-    public readonly static IMongoCollection<UserRequest>? UserRequests =
-        new MongoClient(Env.GetVariable("DatabaseConnectionString"))
-            .GetDatabase(Identity)
-            .GetCollection<UserRequest>("sign-up-requests");
-
 }
