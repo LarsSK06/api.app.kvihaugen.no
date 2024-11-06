@@ -1,0 +1,6 @@
+@KvihaugenAppAPI_HostAddress = http://localhost:5236
+
+GET {{KvihaugenAppAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

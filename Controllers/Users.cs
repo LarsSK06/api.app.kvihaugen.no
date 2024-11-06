@@ -1,12 +1,13 @@
-using KvihaugenIdentityAPI.Attributes;
-using KvihaugenIdentityAPI.Managers;
-using KvihaugenIdentityAPI.Models;
+using KvihaugenAppAPI.Attributes;
+using KvihaugenAppAPI.Classes;
+using KvihaugenAppAPI.Managers;
+using KvihaugenAppAPI.Models;
+using KvihaugenAppAPI.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
-namespace KvihaugenIdentityAPI.Controllers;
+namespace KvihaugenAppAPI.Controllers;
 
-[VerifyIdentity(admin: true)]
 [ApiController]
 [Route("users")]
 public class UsersController : ControllerBase{
@@ -25,6 +26,15 @@ public class UsersController : ControllerBase{
         return Ok(publicUsers);
     }
 
+    [VerifyIdentity]
+    [HttpGet("@me")]
+    public async Task<ActionResult<PublicUser>> GetMyUser(){
+        string token = Functions.GetBearerToken(Request)!;
+        Session session = (await SessionManager.GetAsync(token))!;
+
+        return session.User.ToPublic();
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<PublicUser>> GetUser(int id){
         IAsyncCursor<User> cursor =
@@ -37,6 +47,7 @@ public class UsersController : ControllerBase{
             : Ok(user.ToPublic());
     }
 
+    [VerifyIdentity(admin: true)]
     [HttpPut("{id}")]
     public async Task<ActionResult<PublicUser>> EditUser(int id, HardMutableUser data){
         if(DatabaseManager.Users is null)
@@ -64,11 +75,13 @@ public class UsersController : ControllerBase{
 
         await DatabaseManager.Users.UpdateOneAsync(filter, update);
 
+        cursor = await DatabaseManager.Users.FindAsync(filter);
         user = await cursor.FirstOrDefaultAsync();
 
         return Ok(user.ToPublic());
     }
 
+    [VerifyIdentity(admin: true)]
     [HttpDelete("{id}")]
     public async Task<ActionResult<PublicUser>> DeleteUser(int id){
         if(DatabaseManager.Users is null)

@@ -24,7 +24,7 @@ builder.Services.AddSwaggerGen(options => {
 builder.Services.AddCors(options => {
     options.AddDefaultPolicy(policy => {
         policy
-            .AllowAnyOrigin()
+            .WithOrigins("http://localhost:3000", "http://app.kvihaugen.no")
             .AllowAnyHeader()
             .AllowAnyMethod();
     });

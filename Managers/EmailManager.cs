@@ -1,8 +1,8 @@
-using KvihaugenIdentityAPI.Utilities;
+using KvihaugenAppAPI.Utilities;
 using System.Net.Mail;
 using System.Net;
 
-namespace KvihaugenIdentityAPI.Managers;
+namespace KvihaugenAppAPI.Managers;
 
 public readonly struct EmailManager{
 

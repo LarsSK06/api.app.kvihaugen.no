@@ -1,6 +1,6 @@
-using KvihaugenIdentityAPI.Models;
+using KvihaugenAppAPI.Models;
 
-namespace KvihaugenIdentityAPI.Classes;
+namespace KvihaugenAppAPI.Classes;
 
 public class Session{
 

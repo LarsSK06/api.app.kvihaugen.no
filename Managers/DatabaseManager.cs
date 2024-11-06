@@ -1,8 +1,8 @@
-using KvihaugenIdentityAPI.Models;
-using KvihaugenIdentityAPI.Utilities;
+using KvihaugenAppAPI.Models;
+using KvihaugenAppAPI.Utilities;
 using MongoDB.Driver;
 
-namespace KvihaugenIdentityAPI.Managers;
+namespace KvihaugenAppAPI.Managers;
 
 public readonly struct DatabaseManager{
 

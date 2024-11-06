@@ -1,4 +1,4 @@
-namespace KvihaugenIdentityAPI.Utilities;
+namespace KvihaugenAppAPI.Utilities;
 
 public readonly struct Env{
 
@@ -6,7 +6,9 @@ public readonly struct Env{
         string filePath = $".env/{key}";
 
         if(!File.Exists(filePath)){
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"Could not find environment variable {key}");
+            Console.ForegroundColor = ConsoleColor.White;
             return null;
         }
 
@@ -17,7 +19,9 @@ public readonly struct Env{
         string filePath = $".env/{key}";
 
         if(!File.Exists(filePath)){
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"Could not find environment variable {key}");
+            Console.ForegroundColor = ConsoleColor.White;
             return null;
         }
         

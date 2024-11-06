@@ -1,8 +1,8 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using KvihaugenIdentityAPI.Types.Enums;
+using KvihaugenAppAPI.Types.Enums;
 
-namespace KvihaugenIdentityAPI.Models;
+namespace KvihaugenAppAPI.Models;
 
 public class User{
 

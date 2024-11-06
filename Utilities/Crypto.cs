@@ -1,4 +1,4 @@
-namespace KvihaugenIdentityAPI.Utilities;
+namespace KvihaugenAppAPI.Utilities;
 
 public readonly struct Crypto{
 

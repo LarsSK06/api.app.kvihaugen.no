@@ -1,11 +1,11 @@
-using KvihaugenIdentityAPI.Managers;
-using KvihaugenIdentityAPI.Models;
-using KvihaugenIdentityAPI.Types.Enums;
-using KvihaugenIdentityAPI.Utilities;
+using KvihaugenAppAPI.Managers;
+using KvihaugenAppAPI.Models;
+using KvihaugenAppAPI.Types.Enums;
+using KvihaugenAppAPI.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
-namespace KvihaugenIdentityAPI.Controllers;
+namespace KvihaugenAppAPI.Controllers;
 
 [ApiController]
 [Route("auth")]
@@ -39,7 +39,7 @@ public class AuthController : ControllerBase{
     }
 
     [HttpPost("sign-in")]
-    public async Task<ActionResult<Passport>> SignIn(SignInData data){
+    public async Task<ActionResult<string>> SignIn(SignInData data){
         if(DatabaseManager.Users is null)
             return NotFound();
 
@@ -59,12 +59,7 @@ public class AuthController : ControllerBase{
         if(!Crypto.Verify(data.Password, user.Password))
             return Unauthorized();
 
-        string token = await SessionManager.Create(user);
-
-        return Ok(new Passport(){
-            Token = token,
-            User = user.ToPublic()
-        });
+        return Ok(await SessionManager.Create(user));
     }
 
 }
@@ -80,9 +75,4 @@ public class SignUpData{
 public class SignInData{
     public required string Email { get; set; }
     public required string Password { get; set; }
-}
-
-public class Passport{
-    public required string Token { get; set; }
-    public required PublicUser User { get; set; }
 }

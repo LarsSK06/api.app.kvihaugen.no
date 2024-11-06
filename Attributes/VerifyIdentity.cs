@@ -1,10 +1,10 @@
-using KvihaugenIdentityAPI.Classes;
-using KvihaugenIdentityAPI.Managers;
-using KvihaugenIdentityAPI.Utilities;
+using KvihaugenAppAPI.Classes;
+using KvihaugenAppAPI.Managers;
+using KvihaugenAppAPI.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace KvihaugenIdentityAPI.Attributes;
+namespace KvihaugenAppAPI.Attributes;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public class VerifyIdentityAttribute : Attribute, IAsyncActionFilter{

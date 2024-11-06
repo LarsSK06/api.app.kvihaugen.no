@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Primitives;
 
-namespace KvihaugenIdentityAPI.Utilities;
+namespace KvihaugenAppAPI.Utilities;
 
 public readonly struct Functions{
 

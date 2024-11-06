@@ -1,9 +1,9 @@
-using KvihaugenIdentityAPI.Classes;
-using KvihaugenIdentityAPI.Models;
-using KvihaugenIdentityAPI.Utilities;
+using KvihaugenAppAPI.Classes;
+using KvihaugenAppAPI.Models;
+using KvihaugenAppAPI.Utilities;
 using MongoDB.Driver;
 
-namespace KvihaugenIdentityAPI.Managers;
+namespace KvihaugenAppAPI.Managers;
 
 public readonly struct SessionManager{
 

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace KvihaugenIdentityAPI.Types.Enums;
+namespace KvihaugenAppAPI.Types.Enums;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum Gender{
